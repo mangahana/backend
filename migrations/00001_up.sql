@@ -1,0 +1,26 @@
+CREATE SCHEMA users;
+
+CREATE TABLE users.users (
+  id         SERIAL PRIMARY KEY,
+  email      VARCHAR(254) UNIQUE NOT NULL,
+  password   VARCHAR(100) NOT NULL,
+  roles      INTEGER[] NOT NULL DEFAULT '{}',
+  name       VARCHAR(100) NOT NULL,
+  photo      VARCHAR(512) NOT NULL DEFAULT '',
+  is_banned  BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE users.sessions (
+  user_id    SERIAL NOT NULL,
+  token      VARCHAR(512) UNIQUE NOT NULL,
+  ip         VARCHAR(100)NOT NULL,
+  device     TEXT NOT NULL,
+  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE users.roles (
+  id         SERIAL PRIMARY KEY,
+  name       VARCHAR(100) NOT NULL,
+  permissions INTEGER[] NOT NULL DEFAULT '{}'
+);
